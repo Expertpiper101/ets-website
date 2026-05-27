@@ -240,12 +240,16 @@ function EtsLogo({ compact = false }) {
 
 function App() {
   const [hash, setHash] = useState(window.location.hash || '#top')
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const isProductsPage = hash === '#products' || hash.startsWith('#product-')
   const isAboutPage = hash === '#about'
   const isAuthPage = hash === '#login' || hash === '#register'
 
   useEffect(() => {
-    const handleHashChange = () => setHash(window.location.hash || '#top')
+    const handleHashChange = () => {
+      setHash(window.location.hash || '#top')
+      setIsMobileMenuOpen(false)
+    }
 
     window.addEventListener('hashchange', handleHashChange)
     return () => window.removeEventListener('hashchange', handleHashChange)
@@ -292,10 +296,45 @@ function App() {
           CRM Login
           <LogIn size={16} />
         </a>
-        <button className="icon-button" type="button" aria-label="Open menu">
+        <button
+          className="icon-button"
+          type="button"
+          aria-label="Open menu"
+          aria-expanded={isMobileMenuOpen}
+          aria-controls="mobile-menu"
+          onClick={() => setIsMobileMenuOpen((current) => !current)}
+        >
           <Menu size={22} />
         </button>
       </header>
+
+      <nav
+        className={isMobileMenuOpen ? 'mobile-menu open' : 'mobile-menu'}
+        id="mobile-menu"
+        aria-label="Mobile navigation"
+        onClick={(event) => {
+          if (event.target.closest('a')) {
+            setIsMobileMenuOpen(false)
+          }
+        }}
+      >
+        <a href="#top">Home</a>
+        <a href="#about">About Us</a>
+        <a href="#products">Products</a>
+        <div className="mobile-submenu">
+          {productMenuItems.map((item) => (
+            <a href={`#product-${item.toLowerCase().replaceAll(' ', '-').replaceAll('&', 'and')}`} key={item}>
+              {item}
+            </a>
+          ))}
+        </div>
+        <a href="#capabilities">Capabilities</a>
+        <a href="#process">Process</a>
+        <a href="#crm">CRM-ready</a>
+        <a href="#contact">Contact</a>
+        <a href="#login">CRM Login</a>
+        <a href="#register">Register</a>
+      </nav>
 
       {isProductsPage ? (
         <ProductsPage products={products} productMenuItems={productMenuItems} />

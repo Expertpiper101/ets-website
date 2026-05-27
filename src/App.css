@@ -149,6 +149,47 @@ main {
   background: #ffffff;
 }
 
+.mobile-menu {
+  position: sticky;
+  top: 81px;
+  z-index: 19;
+  display: none;
+  padding: 0 16px;
+  border-bottom: 1px solid rgba(10, 28, 47, 0.1);
+  background: rgba(242, 244, 247, 0.97);
+  backdrop-filter: blur(18px);
+}
+
+.mobile-menu a {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 12px;
+  border-radius: 8px;
+  color: var(--navy);
+  text-decoration: none;
+  font-weight: 800;
+}
+
+.mobile-menu a:hover {
+  color: #ffffff;
+  background: var(--blue);
+}
+
+.mobile-submenu {
+  display: grid;
+  gap: 4px;
+  margin: 0 0 8px 12px;
+  padding-left: 12px;
+  border-left: 2px solid rgba(255, 106, 0, 0.45);
+}
+
+.mobile-submenu a {
+  min-height: 38px;
+  color: var(--graphite);
+  font-size: 0.9rem;
+}
+
 .hero-section {
   display: grid;
   grid-template-columns: minmax(0, 0.96fr) minmax(420px, 1.04fr);
@@ -1068,6 +1109,12 @@ h3 {
 
   .icon-button {
     display: grid;
+  }
+
+  .mobile-menu.open {
+    display: grid;
+    gap: 4px;
+    padding-block: 12px;
   }
 
   .hero-section,
