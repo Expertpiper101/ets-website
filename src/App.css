@@ -203,16 +203,6 @@ main {
   max-width: 720px;
 }
 
-.hero-logo-card {
-  display: inline-grid;
-  margin-bottom: 24px;
-  padding: 18px 22px;
-  border: 1px solid rgba(10, 28, 47, 0.1);
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.92);
-  box-shadow: 0 22px 60px rgba(10, 28, 47, 0.1);
-}
-
 .eyebrow {
   display: inline-flex;
   align-items: center;
@@ -1000,6 +990,15 @@ h3 {
   display: block;
 }
 
+.site-footer .ets-logo {
+  width: 270px;
+  max-width: 100%;
+  margin-bottom: 14px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.96);
+}
+
 .site-footer span {
   color: rgba(255, 255, 255, 0.72);
 }
@@ -1161,15 +1160,6 @@ h3 {
 
   .brand .ets-logo {
     width: 188px;
-  }
-
-  .hero-logo-card {
-    width: 100%;
-    padding: 18px;
-  }
-
-  .hero-logo-card .ets-logo {
-    margin: 0 auto;
   }
 
   .hero-section,

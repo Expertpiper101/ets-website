@@ -348,6 +348,7 @@ function App() {
 
       <footer className="site-footer">
         <div>
+          <EtsLogo compact />
           <strong>Touch Systems</strong>
           <span>Electronic Touch Systems (Pty) Ltd</span>
         </div>
@@ -400,9 +401,6 @@ function HomePage() {
           <div className="eyebrow">
             <Factory size={16} />
             Interface solutions that perform
-          </div>
-          <div className="hero-logo-card">
-            <EtsLogo />
           </div>
           <h1>Electronic touch systems for products that need to perform.</h1>
           <p>
