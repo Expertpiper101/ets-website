@@ -22,7 +22,7 @@ import {
   UsersRound,
   Workflow,
 } from 'lucide-react'
-import etsLogo from './assets/brand/ets-logo-reference.jpg'
+import etsLogo from './assets/brand/ets-logo-wide.jpg'
 import heroImage from './assets/brand/touch-systems-hero.png'
 import './App.css'
 
@@ -189,11 +189,11 @@ const crmCards = [
 ]
 
 const brandColours = [
-  { name: 'Deep navy', value: '#0A1C2F' },
-  { name: 'Steel blue', value: '#123356' },
-  { name: 'Signal orange', value: '#FF6A00' },
+  { name: 'Logo navy', value: '#1E255C' },
+  { name: 'Technical blue', value: '#343E87' },
+  { name: 'Interface violet', value: '#5961AE' },
   { name: 'Graphite', value: '#6B7280' },
-  { name: 'Cloud', value: '#F2F4F7' },
+  { name: 'Cloud', value: '#F4F6FB' },
 ]
 
 const whatsappNumber = '27000000000'

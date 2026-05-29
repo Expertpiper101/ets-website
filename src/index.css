@@ -1,10 +1,10 @@
 :root {
-  --navy: #0a1c2f;
-  --blue: #123356;
-  --orange: #ff6a00;
+  --navy: #1e255c;
+  --blue: #343e87;
+  --orange: #5961ae;
   --graphite: #6b7280;
-  --paper: #f2f4f7;
-  --ink: #0a1c2f;
+  --paper: #f4f6fb;
+  --ink: #1e255c;
   --muted: #6b7280;
   --line: rgba(10, 28, 47, 0.12);
   font-family:
@@ -48,6 +48,6 @@ a:focus-visible,
 input:focus-visible,
 select:focus-visible,
 textarea:focus-visible {
-  outline: 3px solid rgba(255, 106, 0, 0.35);
+  outline: 3px solid rgba(89, 97, 174, 0.35);
   outline-offset: 3px;
 }
