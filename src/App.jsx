@@ -228,6 +228,50 @@ const socialLinks = [
   },
 ]
 
+const crmStats = [
+  { label: 'Open enquiries', value: '18', trend: '+4 this week' },
+  { label: 'Quotes pending', value: '7', trend: 'R 184k pipeline' },
+  { label: 'Artwork approvals', value: '5', trend: '2 urgent' },
+  { label: 'Production jobs', value: '12', trend: '4 due this week' },
+]
+
+const crmPipeline = [
+  {
+    stage: 'New lead',
+    items: [
+      { company: 'Nova Controls', product: 'Membrane keypad', value: 'R 18,400' },
+      { company: 'Metro Labelling', product: 'Domed badges', value: 'R 6,900' },
+    ],
+  },
+  {
+    stage: 'Quoted',
+    items: [
+      { company: 'KZN Instruments', product: 'Graphic overlays', value: 'R 42,500' },
+      { company: 'Aero Panel Works', product: 'Laser engraving', value: 'R 11,200' },
+    ],
+  },
+  {
+    stage: 'Approval',
+    items: [
+      { company: 'MedTech SA', product: 'Touch switches', value: 'R 68,000' },
+      { company: 'PanelPro', product: 'Labels', value: 'R 9,800' },
+    ],
+  },
+]
+
+const crmJobs = [
+  { job: 'ETS-1042', client: 'KZN Instruments', status: 'Artwork proof', due: '31 May' },
+  { job: 'ETS-1043', client: 'MedTech SA', status: 'Material prep', due: '03 Jun' },
+  { job: 'ETS-1044', client: 'Nova Controls', status: 'Quote draft', due: '04 Jun' },
+  { job: 'ETS-1045', client: 'PanelPro', status: 'Ready to dispatch', due: '06 Jun' },
+]
+
+const crmContacts = [
+  { name: 'A. Mokoena', company: 'MedTech SA', type: 'Key account' },
+  { name: 'S. Naidoo', company: 'KZN Instruments', type: 'Buyer' },
+  { name: 'J. van Wyk', company: 'Nova Controls', type: 'Engineer' },
+]
+
 function EtsLogo({ compact = false }) {
   return (
     <img
@@ -244,6 +288,7 @@ function App() {
   const isProductsPage = hash === '#products' || hash.startsWith('#product-')
   const isAboutPage = hash === '#about'
   const isAuthPage = hash === '#login' || hash === '#register'
+  const isDashboardPage = hash === '#dashboard'
 
   useEffect(() => {
     const handleHashChange = () => {
@@ -289,6 +334,7 @@ function App() {
           <a href="#capabilities">Capabilities</a>
           <a href="#process">Process</a>
           <a href="#crm">CRM-ready</a>
+          <a href="#dashboard">CRM Demo</a>
           <a href="#contact">Contact</a>
         </nav>
 
@@ -331,6 +377,7 @@ function App() {
         <a href="#capabilities">Capabilities</a>
         <a href="#process">Process</a>
         <a href="#crm">CRM-ready</a>
+        <a href="#dashboard">CRM Demo</a>
         <a href="#contact">Contact</a>
         <a href="#login">CRM Login</a>
         <a href="#register">Register</a>
@@ -342,6 +389,8 @@ function App() {
         <AboutPage />
       ) : isAuthPage ? (
         <AuthPage mode={hash === '#register' ? 'register' : 'login'} />
+      ) : isDashboardPage ? (
+        <CrmDashboard />
       ) : (
         <HomePage />
       )}
@@ -786,12 +835,132 @@ function AuthPage({ mode }) {
               {isRegister ? 'Create CRM account' : 'Login'}
               <ArrowRight size={18} />
             </button>
+            <a className="demo-dashboard-link" href="#dashboard">
+              Open CRM demo dashboard
+              <ArrowRight size={16} />
+            </a>
             <p>
               {isRegister
                 ? 'Registration will later create a CRM contact and approval workflow.'
                 : 'Authentication will later connect to secure CRM roles and client data.'}
             </p>
           </form>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function CrmDashboard() {
+  return (
+    <section className="crm-dashboard-page" id="dashboard">
+      <div className="crm-dashboard-shell">
+        <aside className="crm-sidebar">
+          <EtsLogo compact />
+          <nav aria-label="CRM sections">
+            <a className="active" href="#dashboard"><Gauge size={17} /> Overview</a>
+            <a href="#dashboard"><UsersRound size={17} /> Contacts</a>
+            <a href="#dashboard"><FileCheck2 size={17} /> Quotes</a>
+            <a href="#dashboard"><ClipboardCheck size={17} /> Approvals</a>
+            <a href="#dashboard"><Factory size={17} /> Production</a>
+            <a href="#dashboard"><Mail size={17} /> Messages</a>
+          </nav>
+        </aside>
+
+        <div className="crm-workspace">
+          <div className="crm-topbar">
+            <div>
+              <span>ETS CRM demo</span>
+              <h1>Sales, quotes and production visibility in one workspace.</h1>
+            </div>
+            <div className="crm-actions">
+              <button type="button">New lead</button>
+              <button type="button">New quote</button>
+            </div>
+          </div>
+
+          <div className="crm-stat-grid">
+            {crmStats.map((stat) => (
+              <article className="crm-stat-card" key={stat.label}>
+                <span>{stat.label}</span>
+                <strong>{stat.value}</strong>
+                <small>{stat.trend}</small>
+              </article>
+            ))}
+          </div>
+
+          <div className="crm-main-grid">
+            <section className="crm-panel pipeline-panel">
+              <div className="crm-panel-heading">
+                <h2>Quote pipeline</h2>
+                <span>Mock CRM data</span>
+              </div>
+              <div className="pipeline-board">
+                {crmPipeline.map((column) => (
+                  <div className="pipeline-column" key={column.stage}>
+                    <strong>{column.stage}</strong>
+                    {column.items.map((item) => (
+                      <article className="pipeline-card" key={`${column.stage}-${item.company}`}>
+                        <span>{item.company}</span>
+                        <p>{item.product}</p>
+                        <small>{item.value}</small>
+                      </article>
+                    ))}
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            <section className="crm-panel">
+              <div className="crm-panel-heading">
+                <h2>Production jobs</h2>
+                <span>Live later</span>
+              </div>
+              <div className="crm-table">
+                {crmJobs.map((job) => (
+                  <div className="crm-row" key={job.job}>
+                    <strong>{job.job}</strong>
+                    <span>{job.client}</span>
+                    <span>{job.status}</span>
+                    <small>{job.due}</small>
+                  </div>
+                ))}
+              </div>
+            </section>
+          </div>
+
+          <div className="crm-bottom-grid">
+            <section className="crm-panel">
+              <div className="crm-panel-heading">
+                <h2>Contacts</h2>
+                <span>Customer records</span>
+              </div>
+              <div className="contact-list">
+                {crmContacts.map((contact) => (
+                  <article key={contact.name}>
+                    <div>{contact.name.slice(0, 1)}</div>
+                    <span>
+                      <strong>{contact.name}</strong>
+                      <small>{contact.company}</small>
+                    </span>
+                    <em>{contact.type}</em>
+                  </article>
+                ))}
+              </div>
+            </section>
+
+            <section className="crm-panel crm-next-panel">
+              <div className="crm-panel-heading">
+                <h2>Next backend step</h2>
+                <span>Phase 2</span>
+              </div>
+              <p>
+                This dashboard is frontend-only. The next build step is adding Supabase auth,
+                database tables for contacts, leads, quotes, jobs, approvals, and role-based access.
+              </p>
+              <a className="secondary-button" href="#login">Back to login</a>
+            </section>
+          </div>
         </div>
       </div>
     </section>
