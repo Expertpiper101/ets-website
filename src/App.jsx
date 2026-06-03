@@ -200,17 +200,19 @@ const whatsappNumber = '27000000000'
 
 const socialLinks = [
   {
-    name: 'YouTube',
-    href: 'https://www.youtube.com/',
+    name: 'TikTok',
+    href: 'https://www.tiktok.com/',
+    brand: 'tiktok',
     icon: (
       <svg viewBox="0 0 24 24" aria-hidden="true">
-        <path d="M21.6 7.2a2.8 2.8 0 0 0-2-2C17.9 4.8 12 4.8 12 4.8s-5.9 0-7.6.4a2.8 2.8 0 0 0-2 2A29.2 29.2 0 0 0 2 12a29.2 29.2 0 0 0 .4 4.8 2.8 2.8 0 0 0 2 2c1.7.4 7.6.4 7.6.4s5.9 0 7.6-.4a2.8 2.8 0 0 0 2-2A29.2 29.2 0 0 0 22 12a29.2 29.2 0 0 0-.4-4.8ZM10 15.1V8.9l5.4 3.1L10 15.1Z" />
+        <path d="M16.4 3c.3 2.2 1.5 3.7 3.6 3.9v3.4a7.4 7.4 0 0 1-3.7-1.1v5.8c0 3.4-2.3 5.9-5.8 5.9A5.5 5.5 0 0 1 5 15.4c0-3.5 2.8-6 6.5-5.5v3.5c-1.6-.5-3 .4-3 2a2 2 0 0 0 2 2.1c1.5 0 2.3-.9 2.3-2.6V3h3.6Z" />
       </svg>
     ),
   },
   {
     name: 'Facebook',
     href: 'https://www.facebook.com/',
+    brand: 'facebook',
     icon: (
       <svg viewBox="0 0 24 24" aria-hidden="true">
         <path d="M14.1 8.7V7.2c0-.7.5-.9.9-.9h2.1V2.7l-3-.1c-3.3 0-4.1 2.5-4.1 4v2.1H7.4v3.9H10v8.8h4.1v-8.8h2.8l.4-3.9h-3.2Z" />
@@ -220,9 +222,20 @@ const socialLinks = [
   {
     name: 'LinkedIn',
     href: 'https://www.linkedin.com/',
+    brand: 'linkedin',
     icon: (
       <svg viewBox="0 0 24 24" aria-hidden="true">
         <path d="M6.8 8.8H3v12.1h3.8V8.8ZM4.9 3a2.2 2.2 0 1 0 0 4.4 2.2 2.2 0 0 0 0-4.4Zm16.1 11c0-3.3-1.8-5.5-4.7-5.5a4 4 0 0 0-3.6 2V8.8H9v12.1h3.8v-6.6c0-1.7.9-2.7 2.3-2.7 1.3 0 2.1.9 2.1 2.8v6.5H21V14Z" />
+      </svg>
+    ),
+  },
+  {
+    name: 'Instagram',
+    href: 'https://www.instagram.com/',
+    brand: 'instagram',
+    icon: (
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M7.6 2.8h8.8a4.8 4.8 0 0 1 4.8 4.8v8.8a4.8 4.8 0 0 1-4.8 4.8H7.6a4.8 4.8 0 0 1-4.8-4.8V7.6a4.8 4.8 0 0 1 4.8-4.8Zm0 3A1.8 1.8 0 0 0 5.8 7.6v8.8a1.8 1.8 0 0 0 1.8 1.8h8.8a1.8 1.8 0 0 0 1.8-1.8V7.6a1.8 1.8 0 0 0-1.8-1.8H7.6Zm4.4 3.1a3.1 3.1 0 1 1 0 6.2 3.1 3.1 0 0 1 0-6.2Zm0 2.2a.9.9 0 1 0 0 1.8.9.9 0 0 0 0-1.8Zm4.1-2.9a1 1 0 1 1 0 2 1 1 0 0 1 0-2Z" />
       </svg>
     ),
   },
@@ -415,7 +428,14 @@ function App() {
         <div className="social-links" aria-label="Social media links">
           {socialLinks.map((social) => {
             return (
-              <a href={social.href} target="_blank" rel="noreferrer" aria-label={social.name} key={social.name}>
+              <a
+                className={`social-link ${social.brand}`}
+                href={social.href}
+                target="_blank"
+                rel="noreferrer"
+                aria-label={social.name}
+                key={social.name}
+              >
                 {social.icon}
               </a>
             )
