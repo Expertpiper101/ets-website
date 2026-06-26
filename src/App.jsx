@@ -23,6 +23,7 @@ import {
   Workflow,
 } from 'lucide-react'
 import etsLogo from './assets/brand/ets-logo-wide.jpg'
+import performancePanelImage from './assets/brand/ets-performance-panel.jpeg'
 import heroImage from './assets/brand/touch-systems-hero.png'
 import './App.css'
 
@@ -55,6 +56,21 @@ const processSteps = [
   'Prototype sample',
   'Production run',
   'Quality dispatch',
+]
+
+const heroSlides = [
+  {
+    image: performancePanelImage,
+    alt: 'Electronic touch membrane keypad panel with precision interface controls',
+    title: 'Precision. Innovation. Impact',
+    text: 'Engineered for performance',
+  },
+  {
+    image: heroImage,
+    alt: 'Membrane keypads and printed industrial overlays on a production bench',
+    title: 'Production-ready interfaces',
+    text: 'Artwork, materials and manufacturing aligned before production',
+  },
 ]
 
 const productMenuItems = [
@@ -186,14 +202,6 @@ const crmCards = [
     title: 'Approval workflow',
     text: 'Future screens can manage artwork proofs, manufacturing notes, revision history, and customer sign-off.',
   },
-]
-
-const brandColours = [
-  { name: 'Logo navy', value: '#1E255C' },
-  { name: 'Technical blue', value: '#343E87' },
-  { name: 'Interface violet', value: '#5961AE' },
-  { name: 'Graphite', value: '#6B7280' },
-  { name: 'Cloud', value: '#F4F6FB' },
 ]
 
 const whatsappNumber = '27000000000'
@@ -462,6 +470,73 @@ function App() {
   )
 }
 
+function HeroCarousel() {
+  const [activeSlide, setActiveSlide] = useState(0)
+  const slide = heroSlides[activeSlide]
+
+  useEffect(() => {
+    const carouselTimer = window.setInterval(() => {
+      setActiveSlide((currentSlide) => (currentSlide + 1) % heroSlides.length)
+    }, 5200)
+
+    return () => window.clearInterval(carouselTimer)
+  }, [])
+
+  function showPreviousSlide() {
+    setActiveSlide((currentSlide) =>
+      currentSlide === 0 ? heroSlides.length - 1 : currentSlide - 1,
+    )
+  }
+
+  function showNextSlide() {
+    setActiveSlide((currentSlide) => (currentSlide + 1) % heroSlides.length)
+  }
+
+  return (
+    <div className="hero-carousel" aria-label="ETS product image carousel">
+      <img src={slide.image} alt={slide.alt} />
+
+      <div className="hero-carousel-caption">
+        <Gauge size={16} />
+        <div>
+          <strong>{slide.title}</strong>
+          <span>{slide.text}</span>
+        </div>
+      </div>
+
+      <button
+        className="carousel-button carousel-button-previous"
+        type="button"
+        onClick={showPreviousSlide}
+        aria-label="Previous image"
+      >
+        <ArrowRight size={18} />
+      </button>
+      <button
+        className="carousel-button carousel-button-next"
+        type="button"
+        onClick={showNextSlide}
+        aria-label="Next image"
+      >
+        <ArrowRight size={18} />
+      </button>
+
+      <div className="carousel-dots" aria-label="Choose carousel image">
+        {heroSlides.map((heroSlide, index) => (
+          <button
+            className={index === activeSlide ? 'active' : ''}
+            type="button"
+            key={heroSlide.title}
+            onClick={() => setActiveSlide(index)}
+            aria-label={`Show ${heroSlide.title}`}
+            aria-pressed={index === activeSlide}
+          />
+        ))}
+      </div>
+    </div>
+  )
+}
+
 function HomePage() {
   return (
     <>
@@ -472,6 +547,7 @@ function HomePage() {
             Interface solutions that perform
           </div>
           <h1>Electronic touch systems for products that need to perform.</h1>
+          <HeroCarousel />
           <p>
             A modern web presence for a specialist manufacturer of membrane keypads,
             graphic overlays, touch switches, badges, labels, laser marking, and digital print.
@@ -489,22 +565,6 @@ function HomePage() {
             <span>Custom production</span>
             <span>In-house design</span>
             <span>Prototype to batch</span>
-          </div>
-          <div className="brand-colours" aria-label="ETS brand colours">
-            {brandColours.map((colour) => (
-              <span key={colour.value} title={`${colour.name} ${colour.value}`}>
-                <i style={{ backgroundColor: colour.value }} />
-                {colour.value}
-              </span>
-            ))}
-          </div>
-        </div>
-
-        <div className="hero-media">
-          <img src={heroImage} alt="Membrane keypads and printed industrial overlays on a production bench" />
-          <div className="quality-panel">
-            <Gauge size={18} />
-            <span>Artwork, materials and manufacturing aligned before production</span>
           </div>
         </div>
       </section>

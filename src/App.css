@@ -40,6 +40,13 @@ main {
   width: 250px;
 }
 
+.brand .ets-logo {
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.96);
+  mix-blend-mode: normal;
+}
+
 .desktop-nav {
   display: flex;
   align-items: center;
@@ -191,16 +198,12 @@ main {
 }
 
 .hero-section {
-  display: grid;
-  grid-template-columns: minmax(0, 0.96fr) minmax(420px, 1.04fr);
-  gap: clamp(30px, 5vw, 78px);
-  align-items: center;
-  min-height: calc(100vh - 82px);
+  min-height: auto;
   padding: clamp(48px, 7vw, 86px) clamp(20px, 5vw, 76px) 40px;
 }
 
 .hero-copy {
-  max-width: 720px;
+  max-width: 980px;
 }
 
 .eyebrow {
@@ -287,61 +290,114 @@ h3 {
   font-weight: 750;
 }
 
-.brand-colours {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 20px;
-}
-
-.brand-colours span {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  color: var(--graphite);
-  font-size: 0.78rem;
-  font-weight: 800;
-}
-
-.brand-colours i {
-  width: 22px;
-  height: 22px;
-  border: 1px solid rgba(10, 28, 47, 0.12);
-  border-radius: 5px;
-}
-
-.hero-media {
+.hero-carousel {
   position: relative;
   overflow: hidden;
+  width: 100%;
+  max-width: 860px;
+  margin-top: 24px;
   border: 1px solid rgba(10, 28, 47, 0.12);
   border-radius: 12px;
   box-shadow: 0 30px 80px rgba(10, 28, 47, 0.18);
-  aspect-ratio: 1.08;
+  aspect-ratio: 16 / 10;
   background: #ffffff;
 }
 
-.hero-media img {
+.hero-carousel img {
   width: 100%;
   height: 100%;
+  display: block;
   object-fit: cover;
 }
 
-.quality-panel {
+.hero-carousel-caption {
   position: absolute;
-  right: 18px;
+  left: 18px;
   bottom: 18px;
   display: flex;
   align-items: center;
   gap: 10px;
-  max-width: 340px;
+  max-width: min(430px, calc(100% - 112px));
   padding: 14px 16px;
   border: 1px solid rgba(255, 255, 255, 0.62);
   border-radius: 8px;
   color: #ffffff;
-  background: rgba(10, 28, 47, 0.84);
+  background: rgba(30, 37, 92, 0.84);
   backdrop-filter: blur(12px);
-  font-size: 0.92rem;
-  font-weight: 750;
+}
+
+.hero-carousel-caption strong,
+.hero-carousel-caption span {
+  display: block;
+}
+
+.hero-carousel-caption strong {
+  font-size: 0.95rem;
+  font-weight: 800;
+}
+
+.hero-carousel-caption span {
+  margin-top: 2px;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 0.82rem;
+  font-weight: 650;
+}
+
+.carousel-button {
+  position: absolute;
+  top: 50%;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgba(255, 255, 255, 0.64);
+  border-radius: 999px;
+  color: #ffffff;
+  background: rgba(30, 37, 92, 0.72);
+  box-shadow: 0 14px 30px rgba(10, 28, 47, 0.18);
+  transform: translateY(-50%);
+}
+
+.carousel-button:hover {
+  background: var(--orange);
+}
+
+.carousel-button-previous {
+  left: 12px;
+}
+
+.carousel-button-previous svg {
+  transform: rotate(180deg);
+}
+
+.carousel-button-next {
+  right: 12px;
+}
+
+.carousel-dots {
+  position: absolute;
+  right: 18px;
+  bottom: 18px;
+  display: flex;
+  gap: 6px;
+  padding: 8px;
+  border-radius: 999px;
+  background: rgba(30, 37, 92, 0.58);
+  backdrop-filter: blur(10px);
+}
+
+.carousel-dots button {
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.56);
+}
+
+.carousel-dots button.active {
+  width: 22px;
+  background: #ffffff;
 }
 
 .stats-band {
@@ -1261,13 +1317,20 @@ h3 {
   display: block;
 }
 
+.site-footer,
+.site-footer a,
+.site-footer strong {
+  color: #ffffff;
+}
+
 .site-footer .ets-logo {
   width: 270px;
   max-width: 100%;
   margin-bottom: 14px;
-  padding: 8px 10px;
+  padding: 10px 12px;
   border-radius: 8px;
-  background: rgba(255, 255, 255, 0.96);
+  background: #ffffff;
+  mix-blend-mode: normal;
 }
 
 .site-footer span {
@@ -1435,7 +1498,7 @@ h3 {
     min-height: auto;
   }
 
-  .hero-media {
+  .hero-carousel {
     aspect-ratio: 16 / 10;
   }
 
@@ -1570,10 +1633,11 @@ h3 {
     border-bottom: 0;
   }
 
-  .quality-panel {
+  .hero-carousel-caption {
     left: 12px;
     right: 12px;
     bottom: 12px;
+    max-width: none;
   }
 
   .site-footer {
