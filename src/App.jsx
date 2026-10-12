@@ -29,6 +29,13 @@ import andrePhoto from './assets/team/andre-hagemann.png'
 import denzelPhoto from './assets/team/denzel-hagemann.png'
 import franklinPhoto from './assets/team/franklin-thomas.png'
 import patrickPhoto from './assets/team/patrick-thomas.png'
+import membraneProduct from './assets/products/membrane-keypads.png'
+import touchProduct from './assets/products/touch-switches.png'
+import overlayProduct from './assets/products/graphic-overlays.png'
+import labelProduct from './assets/products/labels.png'
+import badgeProduct from './assets/products/domed-badges.png'
+import panelProduct from './assets/products/laser-cutting-generated.png'
+import printProduct from './assets/products/digital-printing-generated.png'
 import { apiRequest } from './api.js'
 import './App.css'
 
@@ -93,6 +100,8 @@ const products = [
     icon: Fingerprint,
     title: 'Membrane Keypads',
     slug: 'membrane-keypads',
+    image: membraneProduct,
+    imageAlt: 'ETS membrane keypads with custom printed controls',
     summary:
       'Flat custom key panels with printed conductive circuits, tails and connector options for equipment control.',
     detail:
@@ -103,6 +112,8 @@ const products = [
     icon: Gauge,
     title: 'Touch Switches',
     slug: 'touch-switches',
+    image: touchProduct,
+    imageAlt: 'ETS touch switch product example',
     summary:
       'Integrated switch technology for smooth, sealed and reliable user interfaces.',
     detail:
@@ -113,6 +124,8 @@ const products = [
     icon: Layers3,
     title: 'Graphic Overlays',
     slug: 'graphic-overlays',
+    image: overlayProduct,
+    imageAlt: 'Custom printed ETS graphic overlays',
     summary:
       'Durable printed front overlays made from similar materials used in membrane keypad construction.',
     detail:
@@ -123,6 +136,8 @@ const products = [
     icon: FileCheck2,
     title: 'Labels',
     slug: 'labels',
+    image: labelProduct,
+    imageAlt: 'ETS industrial product labels',
     summary:
       'Vinyl and polycarbonate labels selected around application, environment, budget and required lifespan.',
     detail:
@@ -133,6 +148,8 @@ const products = [
     icon: BadgeCheck,
     title: 'Domed Badges',
     slug: 'domed-badges',
+    image: badgeProduct,
+    imageAlt: 'ETS domed branding badges',
     summary:
       'Printed labels finished with a clear resin lens for extra depth, brightness and a premium tactile effect.',
     detail:
@@ -143,6 +160,8 @@ const products = [
     icon: Sparkles,
     title: 'Laser Cutting & Engraving',
     slug: 'laser-cutting-engraving',
+    image: panelProduct,
+    imageAlt: 'Illustrative laser cutting machine producing a precision metal panel',
     summary:
       'Precision cutting, marking and engraving for panels, overlays, acrylic, labels and production samples.',
     detail:
@@ -153,6 +172,8 @@ const products = [
     icon: Factory,
     title: 'Digital Printing',
     slug: 'digital-printing',
+    image: printProduct,
+    imageAlt: 'Illustrative digital printer producing colourful industrial vinyl labels',
     summary:
       'Digital print support for vinyl, canvas and various substrates where short-run colour work is required.',
     detail:
@@ -792,13 +813,12 @@ function ProductsPage({ products, productMenuItems }) {
         </aside>
 
         <div className="product-grid">
-          {products.map((product, index) => {
+          {products.map((product) => {
             const Icon = product.icon
             return (
               <article className="product-card" id={`product-${product.slug}`} key={product.title}>
-                <div className="product-visual" aria-hidden="true">
-                  <span>{String(index + 1).padStart(2, '0')}</span>
-                  <Icon size={34} />
+                <div className="product-visual">
+                  <img src={product.image} alt={product.imageAlt} loading="lazy" />
                 </div>
                 <div className="product-content">
                   <Icon size={24} />
