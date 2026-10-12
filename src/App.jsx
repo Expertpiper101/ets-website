@@ -101,7 +101,7 @@ const products = [
     title: 'Membrane Keypads',
     slug: 'membrane-keypads',
     image: membraneProduct,
-    imageAlt: 'ETS membrane keypads with custom printed controls',
+    imageAlt: 'Illustrative membrane keypads with printed controls and flexible circuit tails',
     summary:
       'Flat custom key panels with printed conductive circuits, tails and connector options for equipment control.',
     detail:
@@ -113,7 +113,7 @@ const products = [
     title: 'Touch Switches',
     slug: 'touch-switches',
     image: touchProduct,
-    imageAlt: 'ETS touch switch product example',
+    imageAlt: 'Illustrative touch switch panel with illuminated control zones',
     summary:
       'Integrated switch technology for smooth, sealed and reliable user interfaces.',
     detail:
@@ -125,7 +125,7 @@ const products = [
     title: 'Graphic Overlays',
     slug: 'graphic-overlays',
     image: overlayProduct,
-    imageAlt: 'Custom printed ETS graphic overlays',
+    imageAlt: 'Illustrative printed graphic overlays with display and control openings',
     summary:
       'Durable printed front overlays made from similar materials used in membrane keypad construction.',
     detail:
@@ -137,7 +137,7 @@ const products = [
     title: 'Labels',
     slug: 'labels',
     image: labelProduct,
-    imageAlt: 'ETS industrial product labels',
+    imageAlt: 'Illustrative industrial adhesive identification and safety labels',
     summary:
       'Vinyl and polycarbonate labels selected around application, environment, budget and required lifespan.',
     detail:
@@ -149,7 +149,7 @@ const products = [
     title: 'Domed Badges',
     slug: 'domed-badges',
     image: badgeProduct,
-    imageAlt: 'ETS domed branding badges',
+    imageAlt: 'Illustrative glossy resin domed badges in navy, silver and orange',
     summary:
       'Printed labels finished with a clear resin lens for extra depth, brightness and a premium tactile effect.',
     detail:

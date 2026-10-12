@@ -1,10 +1,5 @@
 # Product image sources
 
-The category PNGs for membrane keypads, touch switches, graphic overlays, labels and domed badges were sourced from the existing ETS website:
-https://www.touchsystems.co.za/wp-content/uploads/2022/03/Products-membrane-keypads.png
-https://www.touchsystems.co.za/wp-content/uploads/2022/03/Products-touch-switches.png
-https://www.touchsystems.co.za/wp-content/uploads/2022/03/Products-graphic-overlays.png
-https://www.touchsystems.co.za/wp-content/uploads/2022/03/Products-labels.png
-https://www.touchsystems.co.za/wp-content/uploads/2022/03/Products-dome-badges.png
+All seven product category images are AI-generated illustrations created with the imagegen skill on 2026-10-12. They do not depict actual ETS products, equipment or facilities.
 
-laser-cutting-generated.png and digital-printing-generated.png are AI-generated illustrative category images created on 2026-10-12. They do not depict actual ETS equipment or facilities.
+The membrane keypad, touch switch, graphic overlay, label and domed badge images replace the previously sourced website photos with a consistent navy, silver and orange studio style. Laser cutting and digital printing retain their generated production illustrations.
