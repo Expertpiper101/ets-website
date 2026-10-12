@@ -25,6 +25,11 @@ import {
 import etsLogo from './assets/brand/ets-logo-wide.jpg'
 import performancePanelImage from './assets/brand/ets-performance-panel.jpeg'
 import heroImage from './assets/brand/touch-systems-hero.png'
+import andrePhoto from './assets/team/andre-hagemann.png'
+import denzelPhoto from './assets/team/denzel-hagemann.png'
+import franklinPhoto from './assets/team/franklin-thomas.png'
+import patrickPhoto from './assets/team/patrick-thomas.png'
+import { apiRequest } from './api.js'
 import './App.css'
 
 const services = [
@@ -177,6 +182,13 @@ const aboutHighlights = [
     title: 'Quality control',
     text: 'A documented production sheet follows the entire process from start to finish, with conformance treated as a necessity.',
   },
+]
+
+const teamMembers = [
+  { name: 'Andre Hagemann', photo: andrePhoto },
+  { name: 'Denzel Hagemann', photo: denzelPhoto },
+  { name: 'Franklin Thomas', photo: franklinPhoto },
+  { name: 'Patrick Thomas', photo: patrickPhoto },
 ]
 
 const aboutPrinciples = [
@@ -538,6 +550,35 @@ function HeroCarousel() {
 }
 
 function HomePage() {
+  const [enquiryStatus, setEnquiryStatus] = useState({ type: 'idle', message: '' })
+
+  async function handleEnquirySubmit(event) {
+    event.preventDefault()
+    setEnquiryStatus({ type: 'loading', message: 'Sending enquiry...' })
+
+    const formData = new FormData(event.currentTarget)
+    const payload = {
+      name: formData.get('name'),
+      company: formData.get('company'),
+      email: formData.get('email'),
+      phone: formData.get('phone'),
+      projectType: formData.get('projectType'),
+      brief: formData.get('brief'),
+    }
+
+    try {
+      await apiRequest('/api/enquiries', {
+        method: 'POST',
+        body: JSON.stringify(payload),
+      })
+
+      event.currentTarget.reset()
+      setEnquiryStatus({ type: 'success', message: 'Enquiry sent. ETS will respond from the designated mailbox.' })
+    } catch (error) {
+      setEnquiryStatus({ type: 'error', message: error.message })
+    }
+  }
+
   return (
     <>
       <section className="hero-section" id="top">
@@ -564,9 +605,9 @@ function HomePage() {
           <div className="trust-strip" aria-label="Company strengths">
             <span>Custom production</span>
             <span>In-house design</span>
-            <span>Prototype to batch</span>
-          </div>
+          <span>Prototype to batch</span>
         </div>
+      </div>
       </section>
 
       <section className="stats-band" aria-label="Manufacturing highlights">
@@ -661,18 +702,26 @@ function HomePage() {
             gives the local prototype a polished conversion area and realistic content.
           </p>
         </div>
-        <form className="quote-form">
+        <form className="quote-form" onSubmit={handleEnquirySubmit}>
           <label>
             Name
-            <input type="text" placeholder="Your name" />
+            <input name="name" type="text" placeholder="Your name" required />
           </label>
           <label>
             Company
-            <input type="text" placeholder="Company name" />
+            <input name="company" type="text" placeholder="Company name" required />
+          </label>
+          <label>
+            Email
+            <input name="email" type="email" placeholder="name@company.co.za" />
+          </label>
+          <label>
+            Phone
+            <input name="phone" type="tel" placeholder="Contact number" />
           </label>
           <label>
             Project type
-            <select defaultValue="">
+            <select name="projectType" defaultValue="" required>
               <option value="" disabled>
                 Select a capability
               </option>
@@ -684,12 +733,21 @@ function HomePage() {
           </label>
           <label>
             Brief
-            <textarea placeholder="Tell us about quantities, environment, materials or drawings available." />
+            <textarea
+              name="brief"
+              placeholder="Tell us about quantities, environment, materials or drawings available."
+              required
+            />
           </label>
-          <button type="button">
+          <button type="submit" disabled={enquiryStatus.type === 'loading'}>
             Send enquiry
             <ArrowRight size={18} />
           </button>
+          {enquiryStatus.message && (
+            <p className={enquiryStatus.type === 'error' ? 'form-status error' : 'form-status'}>
+              {enquiryStatus.message}
+            </p>
+          )}
         </form>
       </section>
     </>
@@ -797,6 +855,19 @@ function AboutPage() {
         })}
       </div>
 
+      <section className="team-section" aria-labelledby="team-heading">
+        <div className="eyebrow"><UsersRound size={16} /> The people behind ETS</div>
+        <h2 id="team-heading">Meet our team</h2>
+        <div className="team-grid">
+          {teamMembers.map((member) => (
+            <figure className="team-card" key={member.name}>
+              <img src={member.photo} alt={member.name} loading="lazy" />
+              <figcaption>{member.name}</figcaption>
+            </figure>
+          ))}
+        </div>
+      </section>
+
       <div className="about-band">
         <div>
           <span>Prototype to production</span>
@@ -836,6 +907,40 @@ function AboutPage() {
 
 function AuthPage({ mode }) {
   const isRegister = mode === 'register'
+  const [status, setStatus] = useState({ type: 'idle', message: '' })
+
+  async function handleAuthSubmit(event) {
+    event.preventDefault()
+    setStatus({ type: 'loading', message: isRegister ? 'Creating account...' : 'Signing in...' })
+
+    const formData = new FormData(event.currentTarget)
+    const endpoint = isRegister ? '/api/auth/register' : '/api/auth/login'
+    const payload = isRegister
+      ? {
+          name: formData.get('name'),
+          company: formData.get('company'),
+          email: formData.get('email'),
+          password: formData.get('password'),
+          role: formData.get('role'),
+        }
+      : {
+          email: formData.get('email'),
+          password: formData.get('password'),
+        }
+
+    try {
+      const result = await apiRequest(endpoint, {
+        method: 'POST',
+        body: JSON.stringify(payload),
+      })
+
+      localStorage.setItem('ets_crm_token', result.token)
+      localStorage.setItem('ets_crm_user', JSON.stringify(result.user))
+      window.location.hash = '#dashboard'
+    } catch (error) {
+      setStatus({ type: 'error', message: error.message })
+    }
+  }
 
   return (
     <section className="auth-page" id={mode}>
@@ -868,7 +973,7 @@ function AuthPage({ mode }) {
             </a>
           </div>
 
-          <form className="auth-form">
+          <form className="auth-form" onSubmit={handleAuthSubmit}>
             <div>
               <span>{isRegister ? 'Create account' : 'Welcome back'}</span>
               <h2>{isRegister ? 'Register for CRM access' : 'Login to the client portal'}</h2>
@@ -878,43 +983,48 @@ function AuthPage({ mode }) {
               <>
                 <label>
                   Full name
-                  <input type="text" placeholder="Your full name" />
+                  <input name="name" type="text" placeholder="Your full name" />
                 </label>
                 <label>
                   Company
-                  <input type="text" placeholder="Company name" />
+                  <input name="company" type="text" placeholder="Company name" />
                 </label>
               </>
             )}
 
             <label>
               Email address
-              <input type="email" placeholder="name@company.co.za" />
+              <input name="email" type="email" placeholder="name@company.co.za" defaultValue={!isRegister ? 'admin@ets.local' : ''} />
             </label>
             <label>
               Password
-              <input type="password" placeholder="Enter password" />
+              <input name="password" type="password" placeholder="Enter password" defaultValue={!isRegister ? 'Password123!' : ''} />
             </label>
 
             {isRegister && (
               <label>
                 Account type
-                <select defaultValue="">
+                <select name="role" defaultValue="customer">
                   <option value="" disabled>
                     Select account type
                   </option>
-                  <option>Customer</option>
-                  <option>Internal sales</option>
-                  <option>Production team</option>
-                  <option>Administrator</option>
+                  <option value="customer">Customer</option>
+                  <option value="sales">Internal sales</option>
+                  <option value="production">Production team</option>
+                  <option value="admin">Administrator</option>
                 </select>
               </label>
             )}
 
-            <button type="button">
+            <button type="submit" disabled={status.type === 'loading'}>
               {isRegister ? 'Create CRM account' : 'Login'}
               <ArrowRight size={18} />
             </button>
+            {status.message && (
+              <p className={status.type === 'error' ? 'auth-status error' : 'auth-status'}>
+                {status.message}
+              </p>
+            )}
             <a className="demo-dashboard-link" href="#dashboard">
               Open CRM demo dashboard
               <ArrowRight size={16} />
@@ -932,6 +1042,47 @@ function AuthPage({ mode }) {
 }
 
 function CrmDashboard() {
+  const hasToken = Boolean(localStorage.getItem('ets_crm_token'))
+  const [dashboardData, setDashboardData] = useState(null)
+  const [loadState, setLoadState] = useState(hasToken ? 'loading' : 'mock')
+
+  useEffect(() => {
+    const token = localStorage.getItem('ets_crm_token')
+
+    if (!token) {
+      return
+    }
+
+    apiRequest('/api/crm/dashboard')
+      .then((data) => {
+        setDashboardData(data)
+        setLoadState('live')
+      })
+      .catch(() => {
+        setLoadState('mock')
+      })
+  }, [])
+
+  const dashboardStats = dashboardData
+    ? [
+        { label: 'Open enquiries', value: dashboardData.stats.open_enquiries, trend: 'PostgreSQL live' },
+        { label: 'Quotes pending', value: dashboardData.stats.quotes_pending, trend: 'PostgreSQL live' },
+        { label: 'Artwork approvals', value: dashboardData.stats.artwork_approvals, trend: 'PostgreSQL live' },
+        { label: 'Production jobs', value: dashboardData.stats.production_jobs, trend: 'PostgreSQL live' },
+      ]
+    : crmStats
+
+  const dashboardPipeline = dashboardData
+    ? [
+        { stage: 'New lead', items: dashboardData.leads.filter((lead) => lead.stage === 'new_lead') },
+        { stage: 'Quoted', items: dashboardData.leads.filter((lead) => lead.stage === 'quoted') },
+        { stage: 'Approval', items: dashboardData.leads.filter((lead) => lead.stage === 'approval') },
+      ]
+    : crmPipeline
+
+  const dashboardJobs = dashboardData?.jobs || crmJobs
+  const dashboardContacts = dashboardData?.contacts || crmContacts
+
   return (
     <section className="crm-dashboard-page" id="dashboard">
       <div className="crm-dashboard-shell">
@@ -950,7 +1101,7 @@ function CrmDashboard() {
         <div className="crm-workspace">
           <div className="crm-topbar">
             <div>
-              <span>ETS CRM demo</span>
+              <span>{loadState === 'live' ? 'ETS CRM live local database' : 'ETS CRM demo data'}</span>
               <h1>Sales, quotes and production visibility in one workspace.</h1>
             </div>
             <div className="crm-actions">
@@ -960,7 +1111,7 @@ function CrmDashboard() {
           </div>
 
           <div className="crm-stat-grid">
-            {crmStats.map((stat) => (
+            {dashboardStats.map((stat) => (
               <article className="crm-stat-card" key={stat.label}>
                 <span>{stat.label}</span>
                 <strong>{stat.value}</strong>
@@ -976,14 +1127,14 @@ function CrmDashboard() {
                 <span>Mock CRM data</span>
               </div>
               <div className="pipeline-board">
-                {crmPipeline.map((column) => (
+                {dashboardPipeline.map((column) => (
                   <div className="pipeline-column" key={column.stage}>
                     <strong>{column.stage}</strong>
                     {column.items.map((item) => (
-                      <article className="pipeline-card" key={`${column.stage}-${item.company}`}>
+                      <article className="pipeline-card" key={`${column.stage}-${item.company}-${item.product}`}>
                         <span>{item.company}</span>
                         <p>{item.product}</p>
-                        <small>{item.value}</small>
+                        <small>{typeof item.value === 'number' ? `R ${Number(item.value).toLocaleString('en-ZA')}` : item.value}</small>
                       </article>
                     ))}
                   </div>
@@ -997,12 +1148,12 @@ function CrmDashboard() {
                 <span>Live later</span>
               </div>
               <div className="crm-table">
-                {crmJobs.map((job) => (
-                  <div className="crm-row" key={job.job}>
-                    <strong>{job.job}</strong>
-                    <span>{job.client}</span>
-                    <span>{job.status}</span>
-                    <small>{job.due}</small>
+                {dashboardJobs.map((job) => (
+                  <div className="crm-row" key={job.job || job.job_number}>
+                    <strong>{job.job || job.job_number}</strong>
+                    <span>{job.client || job.company}</span>
+                    <span>{String(job.status).replaceAll('_', ' ')}</span>
+                    <small>{job.due || job.due_date || 'No due date'}</small>
                   </div>
                 ))}
               </div>
@@ -1016,14 +1167,14 @@ function CrmDashboard() {
                 <span>Customer records</span>
               </div>
               <div className="contact-list">
-                {crmContacts.map((contact) => (
+                {dashboardContacts.map((contact) => (
                   <article key={contact.name}>
                     <div>{contact.name.slice(0, 1)}</div>
                     <span>
                       <strong>{contact.name}</strong>
                       <small>{contact.company}</small>
                     </span>
-                    <em>{contact.type}</em>
+                    <em>{contact.type || contact.contact_type}</em>
                   </article>
                 ))}
               </div>

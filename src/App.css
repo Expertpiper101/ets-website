@@ -204,6 +204,17 @@ main {
 
 .hero-copy {
   max-width: 980px;
+  margin-inline: auto;
+  text-align: center;
+}
+
+.hero-copy h1 {
+  margin-inline: auto;
+}
+
+.hero-copy .hero-actions,
+.hero-copy .trust-strip {
+  justify-content: center;
 }
 
 .eyebrow {
@@ -251,6 +262,7 @@ h3 {
 
 .hero-copy p {
   max-width: 650px;
+  margin-inline: auto;
   margin-top: 24px;
   font-size: 1.13rem;
 }
@@ -295,7 +307,7 @@ h3 {
   overflow: hidden;
   width: 100%;
   max-width: 860px;
-  margin-top: 24px;
+  margin: 24px auto 0;
   border: 1px solid rgba(10, 28, 47, 0.12);
   border-radius: 12px;
   box-shadow: 0 30px 80px rgba(10, 28, 47, 0.18);
@@ -311,6 +323,7 @@ h3 {
 }
 
 .hero-carousel-caption {
+  text-align: left;
   position: absolute;
   left: 18px;
   bottom: 18px;
@@ -772,6 +785,50 @@ h3 {
   color: var(--muted);
 }
 
+.team-section {
+  margin: 48px 0;
+}
+
+.team-section h2 {
+  margin: 12px 0 24px;
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.team-card {
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid rgba(10, 28, 47, 0.12);
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.team-card img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: center 20%;
+}
+
+.team-card figcaption {
+  padding: 18px;
+  color: var(--navy);
+  font-weight: 760;
+}
+
+@media (max-width: 900px) {
+  .team-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 520px) {
+  .team-grid { grid-template-columns: 1fr; }
+}
+
 .about-band {
   display: grid;
   grid-template-columns: minmax(0, 0.85fr) minmax(360px, 0.7fr);
@@ -977,6 +1034,23 @@ h3 {
   font-weight: 850;
   cursor: pointer;
   box-shadow: 0 16px 38px rgba(89, 97, 174, 0.22);
+}
+
+.auth-form button:disabled {
+  cursor: wait;
+  opacity: 0.72;
+}
+
+.auth-status {
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: var(--paper);
+  font-weight: 800;
+}
+
+.auth-status.error {
+  color: #8a1f2d;
+  background: #fde8eb;
 }
 
 .demo-dashboard-link {
@@ -1300,6 +1374,24 @@ h3 {
 .quote-form button {
   width: 100%;
   padding: 0 18px;
+}
+
+.quote-form button:disabled {
+  cursor: wait;
+  opacity: 0.72;
+}
+
+.form-status {
+  padding: 10px 12px;
+  border-radius: 8px;
+  color: var(--navy);
+  background: var(--paper);
+  font-weight: 800;
+}
+
+.form-status.error {
+  color: #8a1f2d;
+  background: #fde8eb;
 }
 
 .site-footer {

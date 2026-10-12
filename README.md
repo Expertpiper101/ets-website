@@ -1,16 +1,66 @@
-# React + Vite
+# Electronic Touch Systems Website and CRM
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Local React/Vite website with a PostgreSQL-backed CRM API prototype.
 
-Currently, two official plugins are available:
+## Frontend
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+```powershell
+npm install
+npm run dev
+```
 
-## React Compiler
+Open `http://localhost:5173`.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Local CRM API
 
-## Expanding the ESLint configuration
+Create a local `.env` file from `.env.example` and adjust the PostgreSQL password/database if needed.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```powershell
+Copy-Item .env.example .env
+```
+
+Create the PostgreSQL database once:
+
+```powershell
+createdb ets_crm
+```
+
+If `createdb` is not on PATH on Windows, use the PostgreSQL install path:
+
+```powershell
+& "C:\Program Files\PostgreSQL\18\bin\createdb.exe" -U postgres ets_crm
+```
+
+Run migrations and seed demo CRM data:
+
+```powershell
+npm run db:migrate
+npm run db:seed
+```
+
+Start the backend API in a second terminal:
+
+```powershell
+npm run dev:api
+```
+
+Demo login:
+
+```text
+admin@ets.local
+Password123!
+```
+
+The frontend proxies `/api` requests to `http://localhost:4000`.
+
+## CRM Routes
+
+- `POST /api/auth/login`
+- `POST /api/auth/register`
+- `GET /api/crm/dashboard`
+- `GET /api/crm/leads`
+- `POST /api/crm/leads`
+- `GET /api/crm/quotes`
+- `GET /api/crm/jobs`
+- `GET /api/crm/contacts`
+- `GET /api/crm/approvals`
